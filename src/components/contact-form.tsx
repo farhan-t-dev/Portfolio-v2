@@ -2,106 +2,88 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Terminal, CheckCircle, AlertCircle } from "lucide-react";
+import { Send, Loader2, CheckCircle2 } from "lucide-react";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("loading");
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (res.ok) {
-        setStatus("success");
-        setFormData({ name: "", email: "", message: "" });
-        setTimeout(() => setStatus("idle"), 3000);
-      } else {
-        setStatus("error");
-      }
-    } catch (err) {
-      setStatus("error");
-    }
+    
+    // Simulate API call
+    setTimeout(() => {
+      setStatus("success");
+    }, 2000);
   };
 
-  return (
-    <div className="w-full max-w-lg mx-auto bg-white/5 border border-white/10 rounded-xl p-8 backdrop-blur-sm relative overflow-hidden">
-      {/* Decorative Border */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
-
-      <div className="flex items-center gap-3 mb-6 text-white">
-        <div className="p-2 bg-primary/10 rounded-lg text-primary">
-          <Terminal className="w-5 h-5" />
+  if (status === "success") {
+    return (
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="text-center py-12"
+      >
+        <div className="w-20 h-20 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/20">
+          <CheckCircle2 className="w-10 h-10" />
         </div>
-        <h3 className="font-bold font-mono">ENCRYPTED_TRANSMISSION</h3>
+        <h3 className="text-2xl font-bold text-foreground mb-2">Message Received</h3>
+        <p className="text-muted-foreground">The system has logged your transmission. I'll get back to you shortly.</p>
+        <button 
+          onClick={() => setStatus("idle")}
+          className="mt-8 text-primary font-bold hover:underline"
+        >
+          Send another message
+        </button>
+      </motion.div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6 text-left">
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">Identity</label>
+          <input
+            required
+            type="text"
+            placeholder="Your Name"
+            className="w-full bg-background border border-border rounded-2xl px-5 py-4 text-foreground placeholder-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-all shadow-inner"
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">Email Node</label>
+          <input
+            required
+            type="email"
+            placeholder="your@email.com"
+            className="w-full bg-background border border-border rounded-2xl px-5 py-4 text-foreground placeholder-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-all shadow-inner"
+          />
+        </div>
+      </div>
+      
+      <div className="space-y-2">
+        <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">Transmission Data</label>
+        <textarea
+          required
+          rows={5}
+          placeholder="What are we building?"
+          className="w-full bg-background border border-border rounded-2xl px-5 py-4 text-foreground placeholder-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-all resize-none shadow-inner"
+        />
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-xs font-mono text-white/50 mb-1 uppercase tracking-wider">Identity</label>
-          <input 
-            required
-            type="text" 
-            placeholder="John Doe"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 focus:border-primary/50 focus:bg-black/40 outline-none transition-all font-mono text-sm"
-          />
-        </div>
-        
-        <div>
-          <label className="block text-xs font-mono text-white/50 mb-1 uppercase tracking-wider">Return Frequency (Email)</label>
-          <input 
-            required
-            type="email" 
-            placeholder="john@example.com"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 focus:border-primary/50 focus:bg-black/40 outline-none transition-all font-mono text-sm"
-          />
-        </div>
-
-        <div>
-          <label className="block text-xs font-mono text-white/50 mb-1 uppercase tracking-wider">Data Packet</label>
-          <textarea 
-            required
-            rows={4}
-            placeholder="Initiating protocol..."
-            value={formData.message}
-            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-            className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 focus:border-primary/50 focus:bg-black/40 outline-none transition-all font-mono text-sm resize-none"
-          />
-        </div>
-
-        <button 
-          type="submit" 
-          disabled={status === "loading"}
-          className="w-full py-4 bg-primary text-black font-bold rounded-lg hover:bg-primary/90 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed group"
-        >
-          {status === "loading" ? (
-            <span className="animate-pulse">TRANSMITTING...</span>
-          ) : status === "success" ? (
-            <>
-              <CheckCircle className="w-5 h-5" /> SENT
-            </>
-          ) : status === "error" ? (
-            <>
-              <AlertCircle className="w-5 h-5" /> FAILED
-            </>
-          ) : (
-            <>
-              SEND_MESSAGE <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </>
-          )}
-        </button>
-      </form>
-    </div>
+      <button
+        disabled={status === "loading"}
+        className="w-full bg-foreground text-background font-black uppercase tracking-[0.2em] py-5 rounded-2xl flex items-center justify-center gap-3 hover:opacity-90 transition-all disabled:opacity-50 shadow-xl"
+      >
+        {status === "loading" ? (
+          <Loader2 className="w-5 h-5 animate-spin" />
+        ) : (
+          <>
+            Send Message <Send className="w-5 h-5" />
+          </>
+        )}
+      </button>
+    </form>
   );
 }

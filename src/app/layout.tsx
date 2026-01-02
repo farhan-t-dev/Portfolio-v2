@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import CommandPalette from "@/components/command-palette";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const oswald = Oswald({ 
   subsets: ["latin"],
@@ -34,15 +35,17 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${oswald.variable} ${rajdhani.variable} ${jetbrainsMono.variable} antialiased min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary/30 selection:text-primary`}>
-        {/* Subtle Aurora Background */}
-        <div className="fixed inset-0 z-[-1] bg-background bg-aurora"></div>
-        
-        <Navbar />
-        <CommandPalette />
-        <main className="flex flex-col min-h-screen relative">
-          {children}
-        </main>
-        <Footer />
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {/* Subtle Aurora Background */}
+          <div className="fixed inset-0 z-[-1] bg-background bg-aurora transition-colors duration-500"></div>
+          
+          <Navbar />
+          <CommandPalette />
+          <main className="flex flex-col min-h-screen relative">
+            {children}
+          </main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

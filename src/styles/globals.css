@@ -5,25 +5,78 @@
   --font-rajdhani: var(--font-rajdhani);
   --font-mono: var(--font-mono);
 
-  /* Deep Midnight Theme */
-  --color-background: #0f172a; /* Slate 900 */
-  --color-foreground: #f8fafc; /* Slate 50 */
+  /* Theme Colors using CSS Variables */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   
-  --color-primary: #06b6d4; /* Cyan 500 */
-  --color-primary-foreground: #000000;
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
   
-  --color-secondary: #10b981; /* Emerald 500 */
-  --color-secondary-foreground: #ffffff;
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
   
-  --color-accent: #8b5cf6; /* Violet 500 */
+  --color-accent: var(--accent);
   
-  --color-muted: #1e293b;
-  --color-muted-foreground: #94a3b8;
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   
-  --color-card: #1e293b; /* Slate 800 */
-  --color-card-foreground: #f8fafc;
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
   
-  --color-border: #334155; /* Slate 700 */
+  --color-border: var(--border);
+}
+
+:root {
+  /* Default Dark Mode (Deep Midnight) */
+  --background: #0f172a; /* Slate 900 */
+  --foreground: #f8fafc; /* Slate 50 */
+  
+  --primary: #06b6d4; /* Cyan 500 */
+  --primary-foreground: #000000;
+  
+  --secondary: #10b981; /* Emerald 500 */
+  --secondary-foreground: #ffffff;
+  
+  --accent: #8b5cf6; /* Violet 500 */
+  
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  
+  --border: #334155;
+  
+  --primary-hover-glow: rgba(6, 182, 212, 0.06);
+  
+  /* Shared values */
+  color-scheme: dark;
+}
+
+:root[class~="light"] {
+  /* Aesthetic Light Mode (Paper & Ink - High Contrast) */
+  --background: #ffffff; /* Pure White */
+  --foreground: #000000; /* Pure Black */
+  
+  --primary: #000000; /* Black for primary actions in light mode (Swiss Style) */
+  --primary-foreground: #ffffff;
+  
+  --secondary: #10b981; /* Keep Emerald for success states */
+  --secondary-foreground: #ffffff;
+  
+  --accent: #6d28d9; /* Violet 700 */
+  
+  --muted: #f1f5f9; /* Slate 100 */
+  --muted-foreground: #475569; /* Slate 600 */
+  
+  --card: #ffffff;
+  --card-foreground: #000000;
+  
+  --border: #e2e8f0; /* Slate 200 */
+  
+  --primary-hover-glow: rgba(0, 0, 0, 0.03);
+  
+  color-scheme: light;
 }
 
 @utility container {
@@ -44,11 +97,11 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: var(--border);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #06b6d4;
+  background: var(--primary);
 }
 
 /* Aurora Background Animation */
@@ -65,13 +118,26 @@
   background-size: 100% 100%;
 }
 
-/* Clean Glassmorphism */
+/* Light mode aurora override */
+:root[class~="light"] .bg-aurora {
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(0, 0, 0, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(0, 0, 0, 0.03) 0px, transparent 50%);
+}
+
+/* Clean Glassmorphism - Adaptive */
 .glass-panel {
   background: rgba(30, 41, 59, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+:root[class~="light"] .glass-panel {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .glass-card {
@@ -81,11 +147,23 @@
   transition: all 0.3s ease;
 }
 
+:root[class~="light"] .glass-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
 .glass-card:hover {
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(6, 182, 212, 0.3);
   transform: translateY(-2px);
   box-shadow: 0 10px 40px -10px rgba(6, 182, 212, 0.1);
+}
+
+:root[class~="light"] .glass-card:hover {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
 }
 
 /* Float Animation */

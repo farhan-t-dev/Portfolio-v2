@@ -45,8 +45,8 @@ const BentoCard = ({ children, className, delay = 0, onClick }: any) => {
       onClick={onClick}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       className={cn(
-        "relative overflow-hidden rounded-[3rem] border border-white/10 bg-[#020617] p-1 backdrop-blur-sm group cursor-default shadow-2xl",
-        onClick && "cursor-pointer hover:border-primary/30 transition-colors",
+        "relative overflow-hidden rounded-[3rem] border border-border bg-card p-1 backdrop-blur-sm group cursor-default shadow-2xl transition-colors duration-500",
+        onClick && "cursor-pointer hover:border-primary/30",
         className
       )}
     >
@@ -60,7 +60,7 @@ const BentoCard = ({ children, className, delay = 0, onClick }: any) => {
         style={{
           background: useTransform(
             [mouseX, mouseY],
-            ([cx, cy]) => `radial-gradient(600px circle at ${Number(cx) * 100}% ${Number(cy) * 100}%, rgba(6, 182, 212, 0.08), transparent 40%)`
+            ([cx, cy]) => `radial-gradient(600px circle at ${Number(cx) * 100}% ${Number(cy) * 100}%, var(--primary), transparent 40%)`
           )
         }}
       />
@@ -82,15 +82,15 @@ export default function BentoHero() {
           <div className="h-full flex flex-col justify-between">
             <div className="space-y-6">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
                   <User className="w-5 h-5 text-primary" />
                 </div>
-                <span className="text-xs font-medium text-slate-500 uppercase tracking-widest">Full Stack Developer</span>
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">Full Stack Developer</span>
               </div>
               
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[0.9] text-white">
+              <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[0.9] text-foreground">
                 Building <br />
-                <span className="text-slate-500 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-600">
+                <span className="text-muted-foreground text-transparent bg-clip-text bg-gradient-to-r from-foreground to-muted-foreground">
                   <TypewriterText 
                     texts={["Experiences.", "Systems.", "Solutions.", "Resilience."]} 
                     speed={120} 
@@ -99,18 +99,18 @@ export default function BentoHero() {
                 </span>
               </h1>
               
-              <p className="text-slate-400 max-w-sm text-lg font-medium leading-relaxed">
+              <p className="text-muted-foreground max-w-sm text-lg font-medium leading-relaxed">
                 Self-taught developer with deep roots in system administration. Architecting resilient web solutions.
               </p>
             </div>
 
             <div className="flex flex-wrap gap-4 mt-8">
-              <Link href="/projects" className="px-8 py-4 bg-white text-slate-950 font-bold rounded-full hover:scale-105 transition-transform flex items-center gap-2 shadow-2xl shadow-white/10">
+              <Link href="/projects" className="px-8 py-4 bg-foreground text-background font-bold rounded-full hover:scale-105 transition-transform flex items-center gap-2 shadow-2xl">
                 View Work <ArrowUpRight className="w-4 h-4" />
               </Link>
               <div className="flex gap-2">
                 {[Github, Linkedin].map((Icon, i) => (
-                  <a key={i} href="#" className="p-4 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors">
+                  <a key={i} href="#" className="p-4 rounded-full bg-muted/20 border border-border text-foreground hover:bg-muted/40 transition-colors">
                     <Icon className="w-5 h-5" />
                   </a>
                 ))}
@@ -129,32 +129,32 @@ export default function BentoHero() {
               <Cpu className="w-4 h-4 text-primary" />
               <span className="text-xs font-medium text-primary uppercase tracking-widest">Core Stack</span>
             </div>
-            <ArrowUpRight className="w-4 h-4 text-slate-500" />
+            <ArrowUpRight className="w-4 h-4 text-muted-foreground" />
           </div>
         </BentoCard>
 
         {/* 3. AVAILABILITY (1x1) */}
         <BentoCard className="md:col-span-1 md:row-span-1 flex flex-col justify-between" delay={0.2}>
           <div className="flex justify-between items-start">
-            <Zap className="w-6 h-6 text-yellow-400 shadow-[0_0_15px_rgba(250,204,21,0.3)]" />
+            <Zap className="w-6 h-6 text-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.3)]" />
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
           </div>
           <div>
-            <div className="text-2xl font-bold text-white tracking-tight">Available</div>
-            <div className="text-xs font-medium text-slate-500 mt-1">Open for projects</div>
+            <div className="text-2xl font-bold text-foreground tracking-tight">Available</div>
+            <div className="text-xs font-medium text-muted-foreground mt-1">Open for projects</div>
           </div>
         </BentoCard>
 
         {/* 4. LOCATION (1x1) */}
         <BentoCard className="md:col-span-1 md:row-span-1 flex flex-col justify-between text-center" delay={0.3}>
           <div className="flex justify-center">
-            <div className="w-12 h-12 rounded-full border border-white/5 bg-slate-950 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full border border-border bg-background flex items-center justify-center">
               <MapPin className="w-5 h-5 text-primary" />
             </div>
           </div>
           <div className="space-y-1">
-            <div className="text-xl font-bold text-white">Remote</div>
-            <div className="text-xs font-medium text-slate-500 uppercase tracking-widest">Global</div>
+            <div className="text-xl font-bold text-foreground">Remote</div>
+            <div className="text-xs font-medium text-muted-foreground uppercase tracking-widest">Global</div>
           </div>
         </BentoCard>
 
@@ -164,16 +164,16 @@ export default function BentoHero() {
             <Code2 className="w-4 h-4" />
             <span className="text-xs font-medium uppercase tracking-widest">Activity</span>
           </div>
-          <div className="text-xs text-slate-400 font-medium leading-relaxed">
+          <div className="text-xs text-muted-foreground font-medium leading-relaxed">
             Refactoring system architecture for scalability...
           </div>
-          <div className="text-[10px] text-slate-600 font-mono">2h ago</div>
+          <div className="text-[10px] text-slate-500 font-mono">2h ago</div>
         </BentoCard>
 
         {/* 6. PROOF/STATS (1x1) */}
         <BentoCard className="md:col-span-1 md:row-span-1 flex flex-col justify-between" delay={0.5}>
-          <div className="text-3xl font-bold text-white tracking-tighter leading-none">SysAdmin <br/> & Dev</div>
-          <div className="text-[10px] font-medium text-slate-500 uppercase tracking-widest font-bold">Hybrid Skillset</div>
+          <div className="text-3xl font-bold text-foreground tracking-tighter leading-none">SysAdmin <br/> & Dev</div>
+          <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest font-bold">Hybrid Skillset</div>
         </BentoCard>
 
       </div>

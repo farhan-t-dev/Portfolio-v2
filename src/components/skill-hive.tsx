@@ -45,57 +45,106 @@ interface HexProps {
 }
 
 const HexCell = memo(({ skill, q, r, size, isHovered, isNeighbor, isAnyHovered, onHover, isCenter }: HexProps) => {
+
   const Icon = iconMap[skill.name] || Code2;
+
   
+
   const x = size * Math.sqrt(3) * (q + r / 2);
+
   const y = size * (3 / 2) * r;
 
+
+
   return (
+
     <motion.div
+
       onMouseEnter={() => onHover(skill)}
+
       onMouseLeave={() => onHover(null)}
-      onClick={() => onHover(skill)}
+
       style={{
+
         position: "absolute",
+
         left: "50%",
+
         top: "50%",
+
         width: size * Math.sqrt(3),
+
         height: size * 2,
+
         x: `calc(-50% + ${x}px)`,
+
         y: `calc(-50% + ${y}px)`,
+
         clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+
       }}
+
       animate={{
-        scale: isHovered ? 1.1 : 1,
-        opacity: isAnyHovered && !isHovered && !isNeighbor ? 0.3 : 1, 
-        zIndex: isHovered ? 30 : isNeighbor ? 20 : 1,
+
+        scale: isHovered ? 1.05 : 1,
+
+        opacity: isAnyHovered && !isHovered && !isNeighbor ? 0.4 : 1,
+
       }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      className="group cursor-pointer"
+
+      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+
+      className="group cursor-pointer will-change-transform"
+
     >
-      {/* Base Layer - Soft & Clean */}
+
+      {/* Base Layer - Adaptive */}
+
       <div className={cn(
+
         "absolute inset-0 transition-colors duration-500",
-        isHovered ? "bg-primary" : isNeighbor ? "bg-white/10" : "bg-white/5",
+
+        isHovered ? "bg-primary" : isNeighbor ? "bg-primary/20" : "bg-muted/50",
+
       )} />
+
       
+
       {/* Content Layer */}
+
       <div className={cn(
-        "absolute inset-[1px] transition-all duration-500 overflow-hidden flex flex-col items-center justify-center p-2",
-        "bg-[#020617]", // Solid dark background for contrast
-        isHovered && "bg-slate-900" 
+
+        "absolute inset-[1.5px] transition-all duration-500 overflow-hidden flex flex-col items-center justify-center p-2",
+
+        "bg-card", 
+
+        isHovered && "bg-card/90" 
+
       )} style={{ clipPath: "inherit" }}>
+
         
+
         <Icon className={cn(
-          "w-8 h-8 transition-all duration-500 z-10",
-          isHovered ? "text-white" : 
-          isNeighbor ? "text-white/80" : "text-slate-600 group-hover:text-slate-400"
+
+          "w-7 h-7 transition-all duration-500 z-10",
+
+          isHovered ? "text-primary" : 
+
+          isNeighbor ? "text-foreground/80" : "text-muted-foreground group-hover:text-foreground"
+
         )} />
+
         
+
       </div>
+
     </motion.div>
+
   );
-}, (prev, next) => {
+
+}
+
+, (prev, next) => {
   return (
     prev.isHovered === next.isHovered &&
     prev.isNeighbor === next.isNeighbor &&
@@ -203,15 +252,19 @@ export const TrueRadialHive = ({ rings = 2 }: { rings?: number }) => {
               exit={{ opacity: 0, y: -5 }}
               className="absolute inset-0 flex flex-col items-center justify-center text-center"
             >
-              <span className="text-xs font-medium tracking-widest text-slate-500 uppercase mb-2">
+              <span className="text-[10px] font-bold tracking-[0.2em] text-muted-foreground uppercase mb-2">
                 {hoveredSkill.category}
               </span>
-              <h3 className="text-3xl font-bold text-white mb-2">{hoveredSkill.name}</h3>
+              <h3 className="text-3xl font-bold text-foreground mb-3 tracking-tight">{hoveredSkill.name}</h3>
               <div className="flex items-center gap-3">
-                 <div className="h-1 w-24 bg-slate-800 rounded-full overflow-hidden">
-                   <div style={{ width: `${hoveredSkill.level}%` }} className="h-full bg-white/80" />
+                 <div className="h-1 w-32 bg-muted rounded-full overflow-hidden">
+                   <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: `${hoveredSkill.level}%` }}
+                    className="h-full bg-primary" 
+                   />
                  </div>
-                 <span className="text-xs text-slate-400 font-mono">{hoveredSkill.level}%</span>
+                 <span className="text-[10px] text-muted-foreground font-mono font-bold">{hoveredSkill.level}%</span>
               </div>
             </motion.div>
           ) : (

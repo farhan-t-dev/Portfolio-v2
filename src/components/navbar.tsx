@@ -121,22 +121,22 @@ export default function Navbar() {
         className="fixed top-0 inset-x-0 z-50 hidden md:flex justify-center pt-8 pointer-events-none"
       >
         <div 
-          className="group pointer-events-auto relative flex items-center bg-background/80 backdrop-blur-xl border border-border rounded-full px-2 py-2 shadow-2xl overflow-hidden"
+          className="group pointer-events-auto relative flex items-center bg-background/60 backdrop-blur-2xl border border-white/10 rounded-full px-2 py-2 shadow-[0_8px_32px_-12px_rgba(0,0,0,0.3)] overflow-hidden"
         >
           {/* Logo Section */}
-          <div className="flex items-center gap-2 pl-4 pr-4 border-r border-border">
+          <div className="flex items-center gap-2 pl-4 pr-6 border-r border-white/10">
             <Magnetic>
-              <Link href="/" className="flex items-center gap-2 group/logo">
-                <div className="relative flex items-center justify-center w-8 h-8 bg-primary/10 rounded-lg border border-primary/20 group-hover/logo:bg-primary/20 transition-all duration-500">
-                  <Hexagon className="w-4 h-4 text-primary group-hover/logo:rotate-[120deg] transition-transform duration-700" />
+              <Link href="/" className="flex items-center gap-3 group/logo">
+                <div className="relative flex items-center justify-center w-9 h-9 bg-primary/10 rounded-xl border border-primary/20 group-hover/logo:bg-primary/20 transition-all duration-500 shadow-inner">
+                  <Hexagon className="w-5 h-5 text-primary group-hover/logo:rotate-[120deg] transition-transform duration-1000" />
                 </div>
-                <span className="font-bold text-foreground text-xs tracking-widest uppercase">Farhan</span>
+                <span className="font-bold text-foreground text-[10px] tracking-[0.3em] uppercase">Farhan</span>
               </Link>
             </Magnetic>
           </div>
 
           {/* Navigation Links */}
-          <ul className="flex items-center gap-1 px-2">
+          <ul className="flex items-center gap-1 px-3">
             {links.map((link) => {
               const isActive = pathname === "/" 
                 ? activeSection === link.id
@@ -147,15 +147,15 @@ export default function Navbar() {
                   <Link 
                     href={link.href}
                     className={cn(
-                      "relative px-4 py-2 text-[11px] font-bold uppercase tracking-tighter transition-all flex items-center gap-2",
+                      "relative px-5 py-2.5 text-[10px] font-bold uppercase tracking-widest transition-all flex items-center gap-2",
                       isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
                     )}
                   >
                     {isActive && (
                       <motion.div
                         layoutId="nav-pill-active"
-                        className="absolute inset-0 bg-primary/10 rounded-full border border-primary/20"
-                        transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
+                        className="absolute inset-0 bg-primary/10 rounded-full border border-primary/20 shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                       />
                     )}
                     <span className="relative z-10">{link.label}</span>
@@ -166,7 +166,7 @@ export default function Navbar() {
           </ul>
 
           {/* Action Section */}
-          <div className="flex items-center gap-2 pl-2 pr-2 border-l border-border">
+          <div className="flex items-center gap-2 pl-4 pr-2 border-l border-white/10">
             <Magnetic>
               <ThemeToggle />
             </Magnetic>
@@ -174,7 +174,7 @@ export default function Navbar() {
             <Magnetic className="flex items-center justify-center">
               <button 
                 onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'k', 'ctrlKey': true}))}
-                className="p-2 text-muted-foreground hover:text-foreground rounded-full transition-colors"
+                className="w-9 h-9 flex items-center justify-center text-muted-foreground hover:text-primary rounded-full transition-colors bg-white/5 border border-transparent hover:border-primary/20"
                 title="Command Palette"
               >
                 <Command className="w-4 h-4" />
@@ -184,13 +184,13 @@ export default function Navbar() {
             <Magnetic className="flex items-center justify-center">
               <Link 
                 href="/#contact"
-                className="group/btn relative px-5 py-2.5 bg-foreground text-background text-[11px] font-black uppercase tracking-wider rounded-full hover:shadow-lg transition-all overflow-hidden flex items-center"
+                className="group/btn relative px-6 py-2.5 bg-foreground text-background text-[10px] font-black uppercase tracking-widest rounded-full hover:shadow-[0_0_20px_rgba(0,0,0,0.2)] transition-all overflow-hidden flex items-center ml-2"
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  Hire <Sparkles className="w-3 h-3 fill-current" />
+                  Contact <Sparkles className="w-3 h-3 fill-current" />
                 </span>
                 <motion.div 
-                  className="absolute inset-0 bg-primary opacity-0 group-hover/btn:opacity-100 transition-opacity"
+                  className="absolute inset-0 bg-primary opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"
                   initial={false}
                 />
               </Link>

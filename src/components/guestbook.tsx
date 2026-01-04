@@ -64,15 +64,14 @@ export default function Guestbook() {
     <div className="max-w-2xl mx-auto w-full">
       <div className="bg-card/50 backdrop-blur-xl p-6 rounded-3xl border border-border mb-8 shadow-sm">
         <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          Sign the Global Log
+          Sign the Guestbook
         </h3>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <input
               type="text"
-              placeholder="Your Name / Alias"
+              placeholder="Your Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors shadow-inner"
@@ -81,7 +80,7 @@ export default function Guestbook() {
           </div>
           <div>
             <textarea
-              placeholder="Leave a message for the system..."
+              placeholder="Leave a message..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors h-24 resize-none shadow-inner"
@@ -94,21 +93,21 @@ export default function Guestbook() {
             className="w-full bg-foreground text-background font-bold py-3 rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-            Initialize Transmission
+            Post Message
           </button>
         </form>
       </div>
 
       <div className="space-y-4">
-        <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] mb-4">Recent Transmissions</h4>
+        <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] mb-4">Messages</h4>
         
         {fetching ? (
            <div className="text-center py-10 text-muted-foreground">
              <Loader2 className="w-6 h-6 animate-spin mx-auto mb-2 text-primary" />
-             Loading Data Streams...
+             Loading messages...
            </div>
         ) : entries.length === 0 ? (
-           <div className="text-center py-10 text-muted-foreground italic text-sm">No transmissions received yet. Be the first.</div>
+           <div className="text-center py-10 text-muted-foreground italic text-sm">No messages yet.</div>
         ) : (
           <div className="space-y-4">
             {entries.map((entry) => (

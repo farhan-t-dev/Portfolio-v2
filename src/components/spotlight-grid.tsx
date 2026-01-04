@@ -60,15 +60,15 @@ function SpotlightCard({ icon, title, value, label }: { icon: any, title: string
   return (
     <div
       onMouseMove={handleMouseMove}
-      className="group relative border border-border bg-card/50 overflow-hidden rounded-2xl p-8 transition-colors hover:border-primary/30 shadow-sm"
+      className="group relative border border-border bg-card/40 overflow-hidden rounded-2xl p-8 transition-all duration-300 hover:border-primary/20 shadow-sm will-change-transform"
     >
       {/* Background spotlight effect that adapts to theme */}
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition duration-500 group-hover:opacity-100"
         style={{
           background: useMotionTemplate`
             radial-gradient(
-              650px circle at ${mouseX}px ${mouseY}px,
+              400px circle at ${mouseX}px ${mouseY}px,
               var(--primary-hover-glow),
               transparent 80%
             )

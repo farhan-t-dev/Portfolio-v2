@@ -38,51 +38,53 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             className="absolute inset-0 bg-background/90 backdrop-blur-md"
           />
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative z-10 bg-card border border-border w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl flex flex-col md:flex-row"
+            exit={{ opacity: 0, scale: 0.9, y: 30 }}
+            className="relative z-10 bg-card/80 backdrop-blur-2xl border border-white/10 w-full max-w-5xl max-h-[85vh] overflow-hidden rounded-[2.5rem] shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] flex flex-col md:flex-row"
           >
             <button 
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/50 text-foreground hover:bg-foreground hover:text-background transition-colors border border-border"
+              className="absolute top-6 right-6 z-50 w-10 h-10 flex items-center justify-center rounded-full bg-background/50 text-foreground hover:bg-primary hover:text-white transition-all border border-white/10"
             >
               <X className="w-5 h-5" />
             </button>
 
-            {/* Image Side */}
-            <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-muted/20">
+            {/* Image Side - Fixed aspect for consistency */}
+            <div className="w-full md:w-[55%] h-64 md:h-auto relative bg-muted/10 overflow-hidden">
               <Image 
                 src={project.image} 
                 alt={project.title} 
                 fill 
-                className="object-cover"
+                className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent md:bg-gradient-to-r" />
             </div>
 
             {/* Content Side */}
-            <div className="w-full md:w-1/2 p-8 md:p-10 flex flex-col">
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">
+            <div className="w-full md:w-[45%] p-10 md:p-16 flex flex-col overflow-y-auto">
+              <div className="mb-10">
+                <div className="flex items-center gap-3 mb-8">
+                  <span className="px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-[0.2em] bg-primary/10 text-primary border border-primary/20">
                     {project.category}
                   </span>
+                  <div className="h-[1px] flex-1 bg-border" />
                 </div>
-                <h2 className="text-3xl font-bold text-foreground mb-4">{project.title}</h2>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-8 tracking-tight leading-none">{project.title}</h2>
+                <p className="text-muted-foreground text-lg leading-relaxed font-medium">
                   {project.description}
                 </p>
               </div>
 
-              <div className="space-y-6 flex-1">
+              <div className="space-y-10 flex-1">
                 <div>
-                  <h3 className="text-[10px] font-bold text-foreground uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
-                    <Cpu className="w-4 h-4 text-primary" /> Tech Stack
+                  <h3 className="text-[10px] font-bold text-foreground uppercase tracking-[0.3em] mb-4 flex items-center gap-2 opacity-60">
+                    <Cpu className="w-3.5 h-3.5 text-primary" /> Infrastructure
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map(tag => (
-                      <span key={tag} className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground">
+                      <span key={tag} className="text-[11px] font-bold px-3 py-1.5 rounded-lg bg-muted border border-border text-muted-foreground hover:border-primary/30 transition-colors">
                         {tag}
                       </span>
                     ))}
@@ -91,14 +93,14 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
                 {project.technical_details && (
                   <div>
-                    <h3 className="text-[10px] font-bold text-foreground uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
-                      <Network className="w-4 h-4 text-primary" /> Key Features
+                    <h3 className="text-[10px] font-bold text-foreground uppercase tracking-[0.3em] mb-4 flex items-center gap-2 opacity-60">
+                      <Network className="w-3.5 h-3.5 text-primary" /> Technical Specs
                     </h3>
-                    <ul className="space-y-2">
+                    <ul className="grid gap-3">
                       {project.technical_details.map((detail, i) => (
-                        <li key={i} className="text-xs text-muted-foreground flex gap-2">
-                          <span className="text-primary mt-0.5">•</span>
-                          {detail}
+                        <li key={i} className="text-xs text-muted-foreground flex gap-3 items-start bg-muted/30 p-3 rounded-xl border border-border/50">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                          <span className="font-medium leading-relaxed">{detail}</span>
                         </li>
                       ))}
                     </ul>
@@ -106,20 +108,20 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 )}
               </div>
 
-              <div className="mt-8 pt-8 border-t border-border flex gap-4">
+              <div className="mt-12 pt-8 border-t border-border flex gap-4">
                 <Link 
                   href={project.link} 
                   target="_blank"
-                  className="flex-1 bg-foreground text-background font-bold py-3 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-lg"
+                  className="flex-[2] bg-foreground text-background font-bold uppercase tracking-widest text-[10px] py-4 rounded-2xl flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-xl"
                 >
-                  View Live <ExternalLink className="w-4 h-4" />
+                  Launch App <ExternalLink className="w-3.5 h-3.5" />
                 </Link>
                 <Link 
                   href={project.link} 
                   target="_blank"
-                  className="flex-1 bg-muted text-foreground font-bold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-muted/80 border border-border transition-all"
+                  className="flex-1 bg-muted border border-border text-foreground font-bold uppercase tracking-widest text-[10px] py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-background transition-all"
                 >
-                  Source <Github className="w-4 h-4" />
+                  Code <Github className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>

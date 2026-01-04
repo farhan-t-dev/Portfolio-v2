@@ -36,16 +36,16 @@ export default function Home() {
       <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
       
       {/* 
-        PREMIUM NOISE OVERLAY - OPTIMIZED
+        SUBTLE TEXTURE OVERLAY - OPTIMIZED (No mix-blend-overlay)
       */}
-      <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat" />
+      <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.015] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat" />
 
       {/* 
         BENTO HERO 
       */}
       <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[140px] -z-10 animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px] -z-10" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-[100px] -z-10" />
         
         <BentoHero />
       </section>
